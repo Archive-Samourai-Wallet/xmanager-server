@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{decorators/dashboard}"
+      th:with="currentPage = 'status'">
+<head>
+    <title>Status</title>
+    <meta http-equiv="refresh" content="60" />
+    <link rel="stylesheet" href="/css/smartwizard.css"/>
+    <link rel="stylesheet" href="/css/status.css"/>
+</head>
+<body>
+    <div layout:fragment="main">
+        <h1 class="h2">Status
+            <svg width="20px" height="20px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-eclipse">
+                <path stroke="none" d="M10 50A40 40 0 0 0 90 50A40 42 0 0 1 10 50" fill="#bd4030">
+                    <animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 51;360 50 51" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform>
+                </path>
+            </svg>
+        </h1>
+        <table class="table">
+            <thead>
+            <th class="align-middle">Service ID</th>
+            <th class="align-middle" colspan="2">Last response</th>
+            </thead>
+            <tbody>
+            <div th:each="service : *{managedServices}">
+                <tr>
+                    <th class="align-middle" rowspan="2"><span th:text="${service.id}"/></th>
+                    <td><strong th:if="${service.lastIndex != null}" th:text="${'#'+service.lastIndex+' '}"/>
+                        <a th:if="${service.lastAddressExplorer != null}" th:href="${service.lastAddressExplorer}"><span th:text="${service.lastAddress}"/></a>
+                        <span th:if="${service.lastAddress == null}">-</span>
+                    </td>
+                    <td><span th:text="${(service.lastTime != null ? #dates.format(service.lastTime, 'dd-MMM-yyyy HH:mm:ss'): '-')}"/></td>
+                </tr>
+            </div>
+            </tbody>
+        </table>
+        <p><small>xmanager-protocol <span th:text="${protocolVersion}" style="font-weight:bold"/> - <span th:text="${#dates.format(now, 'dd-MMM-yyyy HH:mm:ss')}"/></small></p>
+    </div>
+</body>
+</html>
