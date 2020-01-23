@@ -52,7 +52,6 @@ public class StatusWebController {
             .collect(Collectors.toList());
     model.addAttribute("managedServices", services);
     model.addAttribute("explorerApi", explorerApi);
-    model.addAttribute("now", System.currentTimeMillis());
     return "status";
   }
 }
