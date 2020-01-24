@@ -25,9 +25,12 @@ public class ManagedService {
   private String xpub;
   private List<String> addresses;
 
+  private int successes;
+  private Long lastSuccess;
+  private int errors;
+  private Long lastError;
   private Integer lastIndex;
   private String lastAddress;
-  private Long lastTime;
 
   public ManagedService(
       XManagerServerConfig serverConfig,
@@ -41,9 +44,12 @@ public class ManagedService {
     this.xpub = serviceConfig.getXpub();
     this.addresses = serviceConfig.getAddresses();
 
+    this.successes = 0;
+    this.lastSuccess = null;
+    this.errors = 0;
+    this.lastError = null;
     this.lastIndex = null;
     this.lastAddress = null;
-    this.lastTime = null;
   }
 
   public void validate() throws Exception {
@@ -85,19 +91,40 @@ public class ManagedService {
     } catch (Exception e) {
       log.error("", e);
     }
+    long now = System.currentTimeMillis();
 
     if (StringUtils.isEmpty(lastAddress)) {
       // fallback
       log.error("[" + id + "] backend not available, fallback to default address");
       lastIndex = 0;
       lastAddress = addresses.get(0);
+      errors++;
+      lastError = now;
+    } else {
+      successes++;
+      lastSuccess = now;
     }
-    lastTime = System.currentTimeMillis();
     return lastAddress;
   }
 
   public String getId() {
     return id;
+  }
+
+  public int getSuccesses() {
+    return successes;
+  }
+
+  public Long getLastSuccess() {
+    return lastSuccess;
+  }
+
+  public int getErrors() {
+    return errors;
+  }
+
+  public Long getLastError() {
+    return lastError;
   }
 
   public List<String> getAddresses() {
@@ -110,9 +137,5 @@ public class ManagedService {
 
   public Integer getLastIndex() {
     return lastIndex;
-  }
-
-  public Long getLastTime() {
-    return lastTime;
   }
 }

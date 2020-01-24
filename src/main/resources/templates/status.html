@@ -21,18 +21,29 @@
         </h1>
         <table class="table">
             <thead>
-            <th class="align-middle">Service ID</th>
-            <th class="align-middle" colspan="2">Last response</th>
+                <th class="align-middle">ID</th>
+                <th class="align-middle">Successes</th>
+                <th class="align-middle">Errors</th>
+                <th class="align-middle">Last response</th>
+                <th class="align-middle">Last success</th>
+                <th class="align-middle">Last error</th>
             </thead>
             <tbody>
             <div th:each="service : *{managedServices}">
                 <tr>
-                    <th class="align-middle" rowspan="2"><span th:text="${service.id}"/></th>
-                    <td><strong th:if="${service.lastIndex != null}" th:text="${'#'+service.lastIndex+' '}"/>
-                        <a th:if="${service.lastAddressExplorer != null}" th:href="${service.lastAddressExplorer}"><span th:text="${service.lastAddress}"/></a>
+                    <td class="align-middle"><strong th:text="${service.id}"/></td>
+                    <td class="align-middle"><strong th:text="${service.successes}"/></td>
+                    <td class="align-middle"><strong th:text="${service.errors}"/></td>
+                    <td><strong th:if="${service.lastIndex != null}" th:text="${'#'+service.lastIndex}"/>&nbsp;
+                        <a th:if="${service.lastAddress != null}" th:href="${service.lastAddressExplorer}"><span th:text="${service.lastAddress}"/></a>
                         <span th:if="${service.lastAddress == null}">-</span>
                     </td>
-                    <td><span th:text="${(service.lastTime != null ? #dates.format(service.lastTime, 'dd-MMM-yyyy HH:mm:ss'): '-')}"/></td>
+                    <td>
+                        <span th:text="${(service.lastSuccess != null ? #dates.format(service.lastSuccess, 'dd-MMM-yyyy HH:mm:ss'): '-')}"/>
+                    </td>
+                    <td>
+                        <span th:text="${(service.lastError != null ? #dates.format(service.lastError, 'dd-MMM-yyyy HH:mm:ss'): '-')}"/>
+                    </td>
                 </tr>
             </div>
             </tbody>

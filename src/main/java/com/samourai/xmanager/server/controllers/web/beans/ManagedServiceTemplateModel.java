@@ -16,6 +16,22 @@ public class ManagedServiceTemplateModel {
     return service.getId();
   }
 
+  public int getSuccesses() {
+    return service.getSuccesses();
+  }
+
+  public Long getLastSuccess() {
+    return service.getLastSuccess();
+  }
+
+  public int getErrors() {
+    return service.getErrors();
+  }
+
+  public Long getLastError() {
+    return service.getLastError();
+  }
+
   public List<String> getAddresses() {
     return service.getAddresses();
   }
@@ -26,10 +42,6 @@ public class ManagedServiceTemplateModel {
 
   public Integer getLastIndex() {
     return service.getLastIndex();
-  }
-
-  public Long getLastTime() {
-    return service.getLastTime();
   }
 
   public String getLastAddressExplorer() {
