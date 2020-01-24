@@ -12,7 +12,7 @@ Add it to your project with:
     <version>VERSION</version>
 </dependency>
 ```
-See:
+See [JavaExample.java](src/test/java/com/samourai/xmanager/server/JavaExample.java)
  - `XManagerEnv`
  - `XManagerProtocol`
  - `com.samourai.xmanager.protocol.rest.*`
