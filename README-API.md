@@ -12,10 +12,9 @@ Add it to your project with:
     <version>VERSION</version>
 </dependency>
 ```
-See [JavaExample.java](src/test/java/com/samourai/xmanager/server/JavaExample.java)
- - `XManagerEnv`
- - `XManagerProtocol`
- - `com.samourai.xmanager.protocol.rest.*`
+
+See [JavaExample.java](src/test/java/com/samourai/xmanager/server/JavaExample.java) for client-side integration.
+
 
 ### Environments
 - MAINNET: https://xm.samourai.io:8080
