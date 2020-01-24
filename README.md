@@ -5,6 +5,9 @@ xmanager-server for Samourai fees.
 ## Installation
 See [README-install.md](README-install.md)
 
+## API
+See [README-API.md](README-install.md)
+
 ## Configuration
 ### Services
 ```
