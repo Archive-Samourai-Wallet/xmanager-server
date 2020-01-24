@@ -21,6 +21,9 @@ See:
 - MAINNET: https://xm.samourai.io:8080
 - TESTNET: https://xm.samourai.io 8081
 
+### Formats
+Request and responses are JSON.
+
 ### Error response
 Error response format:
 ```
