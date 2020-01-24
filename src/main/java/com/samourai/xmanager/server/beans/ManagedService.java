@@ -24,13 +24,13 @@ public class ManagedService {
   private String id;
   private String xpub;
   private List<String> addresses;
+  private boolean allowIndex;
 
   private int successes;
   private Long lastSuccess;
   private int errors;
   private Long lastError;
-  private Integer lastIndex;
-  private String lastAddress;
+  private AddressIndex lastResponse;
 
   public ManagedService(
       XManagerServerConfig serverConfig,
@@ -43,13 +43,13 @@ public class ManagedService {
     this.id = id;
     this.xpub = serviceConfig.getXpub();
     this.addresses = serviceConfig.getAddresses();
+    this.allowIndex = serviceConfig.isAllowIndex();
 
     this.successes = 0;
     this.lastSuccess = null;
     this.errors = 0;
     this.lastError = null;
-    this.lastIndex = null;
-    this.lastAddress = null;
+    this.lastResponse = null;
   }
 
   public void validate() throws Exception {
@@ -82,29 +82,29 @@ public class ManagedService {
     return address;
   }
 
-  public synchronized String fetchNextAddress() {
+  public synchronized AddressIndex fetchNextAddress() {
     // fetch from backend
     try {
       MultiAddrResponse.Address address = backendService.fetchAddress(xpub);
-      lastIndex = address.account_index;
-      lastAddress = computeAddress(address.account_index);
+      String addressBech32 = computeAddress(address.account_index);
+      lastResponse = new AddressIndex(addressBech32, address.account_index);
     } catch (Exception e) {
       log.error("", e);
     }
     long now = System.currentTimeMillis();
 
-    if (StringUtils.isEmpty(lastAddress)) {
+    if (lastResponse == null || StringUtils.isEmpty(lastResponse.getAddress())) {
       // fallback
       log.error("[" + id + "] backend not available, fallback to default address");
-      lastIndex = 0;
-      lastAddress = addresses.get(0);
+      String addressBech32 = addresses.get(0);
+      lastResponse = new AddressIndex(addressBech32, 0);
       errors++;
       lastError = now;
     } else {
       successes++;
       lastSuccess = now;
     }
-    return lastAddress;
+    return lastResponse;
   }
 
   public String getId() {
@@ -131,11 +131,11 @@ public class ManagedService {
     return addresses;
   }
 
-  public String getLastAddress() {
-    return lastAddress;
+  public AddressIndex getLastResponse() {
+    return lastResponse;
   }
 
-  public Integer getLastIndex() {
-    return lastIndex;
+  public boolean isAllowIndex() {
+    return allowIndex;
   }
 }

@@ -2,6 +2,7 @@ package com.samourai.xmanager.server.controllers.web;
 
 import com.samourai.wallet.api.explorer.ExplorerApi;
 import com.samourai.xmanager.protocol.XManagerProtocol;
+import com.samourai.xmanager.server.beans.AddressIndex;
 import com.samourai.xmanager.server.config.XManagerServerConfig;
 import com.samourai.xmanager.server.controllers.web.beans.ManagedServiceTemplateModel;
 import com.samourai.xmanager.server.controllers.web.beans.XManagerDashboardTemplateModel;
@@ -44,7 +45,8 @@ public class StatusWebController {
             .stream()
             .map(
                 service -> {
-                  String lastAddress = service.getLastAddress();
+                  AddressIndex lastResponse = service.getLastResponse();
+                  String lastAddress = lastResponse != null ? lastResponse.getAddress() : null;
                   String urlExplorer =
                       lastAddress != null ? explorerApi.getUrlAddress(lastAddress) : null;
                   return new ManagedServiceTemplateModel(service, urlExplorer);

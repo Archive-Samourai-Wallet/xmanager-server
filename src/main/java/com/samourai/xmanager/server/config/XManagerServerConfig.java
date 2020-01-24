@@ -46,6 +46,7 @@ public class XManagerServerConfig extends ServerConfig {
   public static class ServiceConfig {
     @NotEmpty private String xpub;
     @NotEmpty private List<String> addresses;
+    private boolean allowIndex;
 
     public void validate() throws Exception {
       if (StringUtils.isEmpty(xpub)) {
@@ -72,10 +73,23 @@ public class XManagerServerConfig extends ServerConfig {
       this.addresses = addresses;
     }
 
+    public boolean isAllowIndex() {
+      return allowIndex;
+    }
+
+    public void setAllowIndex(boolean allowIndex) {
+      this.allowIndex = allowIndex;
+    }
+
     @Override
     public String toString() {
       String feesXpub = serverUtils.obfuscateString(xpub, 3);
-      return "xpub=" + feesXpub + " ; addresses=" + String.join(", ", addresses);
+      return "xpub="
+          + feesXpub
+          + " ; allowIndex="
+          + allowIndex
+          + ", addresses="
+          + String.join(", ", addresses);
     }
   }
 

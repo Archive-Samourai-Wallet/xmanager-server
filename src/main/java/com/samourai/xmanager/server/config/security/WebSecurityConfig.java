@@ -20,7 +20,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-  private static final String[] REST_ENDPOINTS = new String[] {XManagerEndpoint.REST_ADDRESS};
+  private static final String[] REST_ENDPOINTS =
+      new String[] {
+        XManagerEndpoint.REST_ADDRESS,
+        XManagerEndpoint.REST_ADDRESS_INDEX,
+        XManagerEndpoint.REST_VERIFY_ADDRESS_INDEX
+      };
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {

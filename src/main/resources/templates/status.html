@@ -22,6 +22,7 @@
         <table class="table">
             <thead>
                 <th class="align-middle">ID</th>
+                <th class="align-middle">status</th>
                 <th class="align-middle">Successes</th>
                 <th class="align-middle">Errors</th>
                 <th class="align-middle">Last response</th>
@@ -32,6 +33,10 @@
             <div th:each="service : *{managedServices}">
                 <tr>
                     <td class="align-middle"><strong th:text="${service.id}"/></td>
+                    <td class="align-middle">
+                        <strong th:if="${service.up}" style="color: green">UP</strong>
+                        <strong th:if="${!service.up}" style="color: red">DOWN</strong>
+                    </td>
                     <td class="align-middle"><strong th:text="${service.successes}"/></td>
                     <td class="align-middle"><strong th:text="${service.errors}"/></td>
                     <td><strong th:if="${service.lastIndex != null}" th:text="${'#'+service.lastIndex}"/>&nbsp;

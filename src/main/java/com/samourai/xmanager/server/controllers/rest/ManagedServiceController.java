@@ -1,11 +1,13 @@
 package com.samourai.xmanager.server.controllers.rest;
 
 import com.samourai.xmanager.protocol.XManagerEndpoint;
-import com.samourai.xmanager.protocol.rest.AddressRequest;
-import com.samourai.xmanager.protocol.rest.AddressResponse;
+import com.samourai.xmanager.protocol.rest.*;
+import com.samourai.xmanager.server.beans.AddressIndex;
 import com.samourai.xmanager.server.beans.ManagedService;
+import com.samourai.xmanager.server.exceptions.NotifiableException;
 import com.samourai.xmanager.server.services.XManagerService;
 import java.lang.invoke.MethodHandles;
+import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +25,40 @@ public class ManagedServiceController extends AbstractRestController {
   }
 
   @RequestMapping(value = XManagerEndpoint.REST_ADDRESS, method = RequestMethod.POST)
-  public AddressResponse address(@RequestBody AddressRequest payload) throws Exception {
+  public AddressResponse address(@Valid @RequestBody AddressRequest payload) throws Exception {
     ManagedService managedService = xManagerService.getManagedService(payload.id);
-    String nextAddress = managedService.fetchNextAddress();
-    AddressResponse response = new AddressResponse(nextAddress);
+    AddressIndex nextAddressIndex = managedService.fetchNextAddress();
+    AddressResponse response = new AddressResponse(nextAddressIndex.getAddress());
     return response;
+  }
+
+  @RequestMapping(value = XManagerEndpoint.REST_ADDRESS_INDEX, method = RequestMethod.POST)
+  public AddressIndexResponse addressIndex(@Valid @RequestBody AddressIndexRequest payload)
+      throws Exception {
+    ManagedService managedService = xManagerService.getManagedService(payload.id);
+    checkAllowIndex(managedService);
+
+    AddressIndex nextAddressIndex = managedService.fetchNextAddress();
+    AddressIndexResponse response =
+        new AddressIndexResponse(nextAddressIndex.getAddress(), nextAddressIndex.getIndex());
+    return response;
+  }
+
+  @RequestMapping(value = XManagerEndpoint.REST_VERIFY_ADDRESS_INDEX, method = RequestMethod.POST)
+  public VerifyAddressIndexResponse verifyAddressIndex(
+      @Valid @RequestBody VerifyAddressIndexRequest payload) throws Exception {
+    ManagedService managedService = xManagerService.getManagedService(payload.id);
+    checkAllowIndex(managedService);
+
+    String address = managedService.computeAddress(payload.index);
+    boolean valid = address.equals(payload.address);
+    VerifyAddressIndexResponse response = new VerifyAddressIndexResponse(valid);
+    return response;
+  }
+
+  private void checkAllowIndex(ManagedService managedService) throws Exception {
+    if (!managedService.isAllowIndex()) {
+      throw new NotifiableException("addressIndex not allowed for this service");
+    }
   }
 }

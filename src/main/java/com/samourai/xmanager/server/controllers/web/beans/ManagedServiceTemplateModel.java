@@ -1,5 +1,6 @@
 package com.samourai.xmanager.server.controllers.web.beans;
 
+import com.samourai.xmanager.server.beans.AddressIndex;
 import com.samourai.xmanager.server.beans.ManagedService;
 import java.util.List;
 
@@ -37,14 +38,23 @@ public class ManagedServiceTemplateModel {
   }
 
   public String getLastAddress() {
-    return service.getLastAddress();
+    AddressIndex addressIndex = service.getLastResponse();
+    return addressIndex != null ? addressIndex.getAddress() : null;
   }
 
   public Integer getLastIndex() {
-    return service.getLastIndex();
+    AddressIndex addressIndex = service.getLastResponse();
+    return addressIndex != null ? addressIndex.getIndex() : null;
   }
 
   public String getLastAddressExplorer() {
     return lastAddressExplorer;
+  }
+
+  public boolean isUp() {
+    if (getLastError() != null && (getLastSuccess() == null || getLastError() > getLastSuccess())) {
+      return false;
+    }
+    return true;
   }
 }
