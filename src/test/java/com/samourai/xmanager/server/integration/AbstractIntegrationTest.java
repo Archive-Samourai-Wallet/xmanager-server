@@ -27,7 +27,7 @@ public abstract class AbstractIntegrationTest {
   @Before
   public void setUp() throws Exception {
     // enable debug
-    Utils.setLoggerDebug();
+    Utils.getInstance().setLoggerDebug();
 
     serverConfig.validate();
   }
