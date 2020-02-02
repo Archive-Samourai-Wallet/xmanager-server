@@ -1,28 +1,40 @@
 package com.samourai.xmanager.server;
 
-import com.samourai.xmanager.protocol.XManagerEndpoint;
+import com.samourai.http.client.IHttpClient;
+import com.samourai.xmanager.client.XManagerClient;
 import com.samourai.xmanager.protocol.XManagerEnv;
-import com.samourai.xmanager.protocol.XManagerProtocol;
-import com.samourai.xmanager.protocol.rest.AddressRequest;
-import com.samourai.xmanager.protocol.rest.AddressResponse;
+import com.samourai.xmanager.protocol.XManagerService;
+import com.samourai.xmanager.protocol.rest.AddressIndexResponse;
 
 public class JavaExample {
-    public void example() {
+  public void example() {
+    // configuration
+    boolean testnet = true;
+    boolean onion = false;
+    IHttpClient httpClient = null; // TODO provide AndroidHttpClient or CliHttpClient
 
-        XManagerEnv env = XManagerEnv.TESTNET;
-        XManagerProtocol xmProtocol = XManagerProtocol.getInstance();
+    // instanciation
+    XManagerClient xManagerClient = new XManagerClient(testnet, onion, httpClient);
+    XManagerEnv xManagerEnv = XManagerEnv.get(testnet);
 
-        {
-            // URL
-            String serviceUrl = xmProtocol.getUrlAddress(env);
+    // get address (or default when server unavailable)
+    String address = xManagerClient.getAddressOrDefault(XManagerService.RICOCHET);
 
-            // request format
-            AddressRequest requestBody = new AddressRequest("WHIRLPOOL");
+    // get address + index
+    AddressIndexResponse addressIndexResponse =
+        xManagerClient.getAddressIndexOrDefault(XManagerService.RICOCHET);
+    System.out.println(
+        "address=" + addressIndexResponse.address + ", index=" + addressIndexResponse.index);
 
-            // response format
-            AddressResponse responseBean;
-
-            // now send POST(requestBody) to "serviceUrl", read response into "responseBean"
-        }
+    // validate address + index
+    String addressToValidate = "...";
+    int indexToValidate = 0;
+    try {
+      boolean valid =
+          xManagerClient.verifyAddressIndexResponseOrException(
+              XManagerService.RICOCHET, addressToValidate, indexToValidate);
+    } catch (Exception e) {
+      // server not available
     }
+  }
 }
