@@ -18,6 +18,7 @@ public class XManagerServerConfig extends ServerConfig {
   private static final ServerUtils serverUtils = ServerUtils.getInstance();
 
   private boolean testnet;
+  private long requestTimeout;
   private NetworkParameters networkParameters;
   private Map<String, ServiceConfig> services;
 
@@ -29,6 +30,14 @@ public class XManagerServerConfig extends ServerConfig {
     this.testnet = testnet;
     NetworkParameters networkParameters = testnet ? TestNet3Params.get() : MainNetParams.get();
     this.networkParameters = networkParameters;
+  }
+
+  public long getRequestTimeout() {
+    return requestTimeout;
+  }
+
+  public void setRequestTimeout(long requestTimeout) {
+    this.requestTimeout = requestTimeout;
   }
 
   public NetworkParameters getNetworkParameters() {
