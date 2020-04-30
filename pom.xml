@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.Samourai-Wallet</groupId>
 	<artifactId>xmanager-server</artifactId>
-	<version>develop-SNAPSHOT</version>
+	<version>1.0.2</version>
 	<name>xmanager-server</name>
 	<properties>
 		<spring-boot.version>2.1.6.RELEASE</spring-boot.version>
@@ -150,6 +150,6 @@
 	</repositories>
 	<scm>
 		<connection>scm:git:git@code.samourai.io:wallet/xmanager-server.git</connection>
-		<tag>1.0.1</tag>
+		<tag>1.0.2</tag>
 	</scm>
 </project>
