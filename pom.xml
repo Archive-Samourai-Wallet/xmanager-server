@@ -12,12 +12,12 @@
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>com.github.Samourai-Wallet</groupId>
+			<groupId>io.samourai.code.whirlpool</groupId>
 			<artifactId>java-server</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.2</version>
 		</dependency>
 		<dependency>
-			<groupId>com.github.Samourai-Wallet</groupId>
+			<groupId>io.samourai.code.whirlpool</groupId>
 			<artifactId>xmanager-protocol</artifactId>
 			<version>1.0.0</version>
 		</dependency>

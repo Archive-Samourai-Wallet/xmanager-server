@@ -5,6 +5,7 @@ import com.samourai.xmanager.protocol.XManagerEndpoint;
 import com.samourai.xmanager.server.controllers.web.ConfigWebController;
 import com.samourai.xmanager.server.controllers.web.LoginWebController;
 import com.samourai.xmanager.server.controllers.web.StatusWebController;
+import com.samourai.xmanager.server.controllers.web.SystemWebController;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -54,6 +55,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .hasAnyAuthority(WhirlpoolPrivilege.STATUS.toString(), WhirlpoolPrivilege.ALL.toString())
         .antMatchers(ConfigWebController.ENDPOINT)
         .hasAnyAuthority(WhirlpoolPrivilege.CONFIG.toString(), WhirlpoolPrivilege.ALL.toString())
+        .antMatchers(SystemWebController.ENDPOINT)
+        .hasAnyAuthority(WhirlpoolPrivilege.SYSTEM.toString(), WhirlpoolPrivilege.ALL.toString())
 
         // reject others
         .anyRequest()

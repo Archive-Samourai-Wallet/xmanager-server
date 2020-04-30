@@ -27,7 +27,7 @@ public class ManagedServiceController extends AbstractRestController {
   @RequestMapping(value = XManagerEndpoint.REST_ADDRESS, method = RequestMethod.POST)
   public AddressResponse address(@Valid @RequestBody AddressRequest payload) throws Exception {
     ManagedService managedService = xManagerService.getManagedService(payload.id);
-    AddressIndex nextAddressIndex = managedService.fetchNextAddress();
+    AddressIndex nextAddressIndex = managedService.fetchAddressNextOrDefault();
     AddressResponse response = new AddressResponse(nextAddressIndex.getAddress());
     return response;
   }
@@ -38,7 +38,7 @@ public class ManagedServiceController extends AbstractRestController {
     ManagedService managedService = xManagerService.getManagedService(payload.id);
     checkAllowIndex(managedService);
 
-    AddressIndex nextAddressIndex = managedService.fetchNextAddress();
+    AddressIndex nextAddressIndex = managedService.fetchAddressNextOrDefault();
     AddressIndexResponse response =
         new AddressIndexResponse(nextAddressIndex.getAddress(), nextAddressIndex.getIndex());
     return response;

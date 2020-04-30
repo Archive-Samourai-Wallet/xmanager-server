@@ -1,32 +1,36 @@
 package com.samourai.xmanager.server.controllers.web;
 
+import com.samourai.javaserver.utils.ServerUtils;
+import com.samourai.javaserver.web.controllers.AbstractConfigWebController;
+import com.samourai.javaserver.web.models.ConfigTemplateModel;
 import com.samourai.xmanager.server.config.XManagerServerConfig;
-import com.samourai.xmanager.server.controllers.web.beans.XManagerDashboardTemplateModel;
-import java.lang.invoke.MethodHandles;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class ConfigWebController {
-  private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+public class ConfigWebController extends AbstractConfigWebController {
   public static final String ENDPOINT = "/status/config";
 
   private XManagerServerConfig serverConfig;
+  private ServerProperties serverProperties;
 
   @Autowired
-  public ConfigWebController(XManagerServerConfig serverConfig) {
+  public ConfigWebController(XManagerServerConfig serverConfig, ServerProperties serverProperties) {
     this.serverConfig = serverConfig;
+    this.serverProperties = serverProperties;
   }
 
   @RequestMapping(value = ENDPOINT, method = RequestMethod.GET)
-  public String status(Model model) {
-    new XManagerDashboardTemplateModel(serverConfig).apply(model);
-    model.addAttribute("configInfo", serverConfig.getConfigInfo());
-    return "config";
+  public String config(Model model) {
+    ConfigTemplateModel configTemplateModel =
+        new ConfigTemplateModel(
+            serverConfig.getName(), serverConfig.getName(), serverConfig.getConfigInfo());
+    configTemplateModel.configInfo.put(
+        "serverProperties", ServerUtils.getInstance().toJsonString(serverProperties));
+    return super.config(model, configTemplateModel);
   }
 }

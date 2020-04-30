@@ -1,6 +1,7 @@
 package com.samourai.xmanager.server.beans;
 
 import com.samourai.wallet.api.backend.beans.MultiAddrResponse;
+import com.samourai.wallet.segwit.bech32.Bech32UtilGeneric;
 import com.samourai.wallet.util.FormatsUtilGeneric;
 import com.samourai.xmanager.server.config.XManagerServerConfig;
 import com.samourai.xmanager.server.exceptions.NotifiableException;
@@ -15,7 +16,8 @@ import org.springframework.util.StringUtils;
 
 public class ManagedService {
   private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-  private static final FormatsUtilGeneric formatUtils = FormatsUtilGeneric.getInstance();
+  private static final FormatsUtilGeneric formatUtil = FormatsUtilGeneric.getInstance();
+  private static final Bech32UtilGeneric bech32Util = Bech32UtilGeneric.getInstance();
   private static final Utils utils = Utils.getInstance();
 
   private NetworkParameters params;
@@ -25,6 +27,7 @@ public class ManagedService {
   private String xpub;
   private List<String> addresses;
   private boolean allowIndex;
+  private boolean bech32;
 
   private int successes;
   private Long lastSuccess;
@@ -44,6 +47,7 @@ public class ManagedService {
     this.xpub = serviceConfig.getXpub();
     this.addresses = serviceConfig.getAddresses();
     this.allowIndex = serviceConfig.isAllowIndex();
+    this.bech32 = formatUtil.isValidBech32(addresses.get(0));
 
     this.successes = 0;
     this.lastSuccess = null;
@@ -53,12 +57,12 @@ public class ManagedService {
   }
 
   public void validate() throws Exception {
-    if (!formatUtils.isValidXpub(xpub)) {
+    if (!formatUtil.isValidXpub(xpub)) {
       throw new NotifiableException(id + ".xpub is invalid: " + xpub);
     }
     for (int i = 0; i < addresses.size(); i++) {
       String address = addresses.get(i);
-      if (!formatUtils.isValidBech32(address)) {
+      if (!formatUtil.isValidBitcoinAddress(address, params)) {
         throw new NotifiableException(id + ".address[" + i + "] is invalid: " + address);
       }
 
@@ -78,37 +82,52 @@ public class ManagedService {
   }
 
   public String computeAddress(int i) {
-    String address = utils.computeXpubAddressBech32(i, xpub, Utils.CHAIN_RECEIVE, params);
+    String address;
+    if (bech32) {
+      address = utils.computeXpubAddressBech32(i, xpub, Utils.CHAIN_RECEIVE, params);
+    } else {
+      address = utils.computeXpubAddressSegwit(i, xpub, Utils.CHAIN_RECEIVE, params);
+    }
     return address;
   }
 
-  public synchronized AddressIndex fetchNextAddress() {
+  public synchronized AddressIndex fetchAddressNextOrDefault() {
+    long now = System.currentTimeMillis();
     // fetch from backend
     try {
-      MultiAddrResponse.Address address = backendService.fetchAddress(xpub);
-      String addressBech32 = computeAddress(address.account_index);
-      lastResponse = new AddressIndex(addressBech32, address.account_index);
-    } catch (Exception e) {
-      log.error("", e);
-    }
-    long now = System.currentTimeMillis();
-
-    if (lastResponse == null || StringUtils.isEmpty(lastResponse.getAddress())) {
-      // fallback
-      log.error("[" + id + "] backend not available, fallback to default address");
-      String addressBech32 = addresses.get(0);
-      lastResponse = new AddressIndex(addressBech32, 0);
-      errors++;
-      lastError = now;
-    } else {
+      lastResponse = fetchAddressNext();
+      if (StringUtils.isEmpty(lastResponse.getAddress())) {
+        throw new Exception("lastResponse.address is empty!");
+      }
       successes++;
       lastSuccess = now;
+    } catch (Exception e) {
+      // fallback
+      log.error("[" + id + "] backend not available, fallback to default address", e);
+      lastResponse = getAddressDefault();
+      errors++;
+      lastError = now;
     }
     return lastResponse;
   }
 
+  private AddressIndex fetchAddressNext() throws Exception {
+    MultiAddrResponse.Address response = backendService.fetchAddress(xpub);
+    String address = computeAddress(response.account_index);
+    return new AddressIndex(address, response.account_index);
+  }
+
+  private AddressIndex getAddressDefault() {
+    String address = addresses.get(0);
+    return new AddressIndex(address, 0);
+  }
+
   public String getId() {
     return id;
+  }
+
+  public boolean isBech32() {
+    return bech32;
   }
 
   public int getSuccesses() {
