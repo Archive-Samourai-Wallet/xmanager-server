@@ -149,7 +149,7 @@
 		</repository>
 	</repositories>
 	<scm>
-		<connection>git@code.samourai.io:wallet/xpub-manager-for-fees.git</connection>
+		<connection>scm:git:git@code.samourai.io:wallet/xpub-manager-for-fees.git</connection>
 		<tag>1.0.2</tag>
 	</scm>
 </project>
