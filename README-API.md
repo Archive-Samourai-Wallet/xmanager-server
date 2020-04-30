@@ -44,6 +44,12 @@ Response:
 }
 ```
 
+Sample request:
+```
+curl -X POST -k -H 'Content-Type: application/json' -i 'https://xm.samourai.io:8081/rest/address' --data '{"id":"WHIRLPOOL"}'
+```
+
+
 ### Get fee address with index: ```POST /rest/addressIndex```
 Parameters:
 * id: service ID
@@ -54,6 +60,11 @@ Response:
     "address": "bc1...",
     "index": 1234
 }
+```
+
+Sample request:
+```
+curl -X POST -k -H 'Content-Type: application/json' -i 'https://xm.samourai.io:8081/rest/addressIndex' --data '{"id":"WHIRLPOOL"}'
 ```
 
 ### Verify fee address with index: ```POST /rest/verifyAddressIndex```
@@ -67,4 +78,9 @@ Response:
 {
     "valid": true
 }
+```
+
+Sample request:
+```
+curl -X POST -k -H 'Content-Type: application/json' -i 'https://xm.samourai.io:8081/rest/verifyAddressIndex' --data '{"id":"WHIRLPOOL", "address":"tb1q6m3urxjc8j2l8fltqj93jarmzn0975nnxuymnx", "index":0}'
 ```
