@@ -22,7 +22,8 @@
         <table class="table">
             <thead>
                 <th class="align-middle">ID</th>
-                <th class="align-middle">status</th>
+                <th class="align-middle">Fallback</th>
+                <th class="align-middle">Status</th>
                 <th class="align-middle">Successes</th>
                 <th class="align-middle">Errors</th>
                 <th class="align-middle">Last response</th>
@@ -32,7 +33,12 @@
             <tbody>
             <div th:each="service : *{managedServices}">
                 <tr>
-                    <td class="align-middle"><strong th:text="${service.id}"/></td>
+                    <td class="align-middle">
+                        <strong th:text="${service.id}"/>
+                    </td>
+                    <td class="align-middle">
+                        <small th:text="${service.addresses[0]}"/>
+                    </td>
                     <td class="align-middle">
                         <strong th:if="${service.up}" style="color: green">UP</strong>
                         <strong th:if="${!service.up}" style="color: red">DOWN</strong>
