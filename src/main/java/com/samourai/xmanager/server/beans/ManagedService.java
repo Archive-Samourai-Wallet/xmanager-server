@@ -1,8 +1,8 @@
 package com.samourai.xmanager.server.beans;
 
 import com.samourai.wallet.api.backend.beans.MultiAddrResponse;
-import com.samourai.wallet.segwit.bech32.Bech32UtilGeneric;
 import com.samourai.wallet.util.FormatsUtilGeneric;
+import com.samourai.wallet.util.XPubUtil;
 import com.samourai.xmanager.server.config.XManagerServerConfig;
 import com.samourai.xmanager.server.exceptions.NotifiableException;
 import com.samourai.xmanager.server.services.BackendService;
@@ -17,8 +17,7 @@ import org.springframework.util.StringUtils;
 public class ManagedService {
   private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
   private static final FormatsUtilGeneric formatUtil = FormatsUtilGeneric.getInstance();
-  private static final Bech32UtilGeneric bech32Util = Bech32UtilGeneric.getInstance();
-  private static final Utils utils = Utils.getInstance();
+  private static final XPubUtil xPubUtil = XPubUtil.getInstance();
 
   private NetworkParameters params;
   private BackendService backendService;
@@ -84,9 +83,9 @@ public class ManagedService {
   public String computeAddress(int i) {
     String address;
     if (bech32) {
-      address = utils.computeXpubAddressBech32(i, xpub, Utils.CHAIN_RECEIVE, params);
+      address = xPubUtil.getAddressBech32(xpub, i, Utils.CHAIN_RECEIVE, params);
     } else {
-      address = utils.computeXpubAddressSegwit(i, xpub, Utils.CHAIN_RECEIVE, params);
+      address = xPubUtil.getAddressSegwit(xpub, i, Utils.CHAIN_RECEIVE, params);
     }
     return address;
   }
