@@ -1,6 +1,6 @@
 package com.samourai.xmanager.server.beans;
 
-import com.samourai.wallet.api.backend.beans.MultiAddrResponse;
+import com.samourai.wallet.api.backend.beans.WalletResponse;
 import com.samourai.wallet.util.FormatsUtilGeneric;
 import com.samourai.wallet.util.XPubUtil;
 import com.samourai.xmanager.server.config.XManagerServerConfig;
@@ -111,9 +111,10 @@ public class ManagedService {
   }
 
   private AddressIndex fetchAddressNext() throws Exception {
-    MultiAddrResponse.Address response = backendService.fetchAddress(xpub);
-    String address = computeAddress(response.account_index);
-    return new AddressIndex(address, response.account_index);
+    WalletResponse response = backendService.fetchWallet(xpub);
+    WalletResponse.Address addressResponse = response.addresses[0];
+    String address = computeAddress(addressResponse.account_index);
+    return new AddressIndex(address, addressResponse.account_index);
   }
 
   private AddressIndex getAddressDefault() {

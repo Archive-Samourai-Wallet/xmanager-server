@@ -33,5 +33,5 @@ public abstract class AbstractIntegrationTest {
   }
 
   @AfterAll
-  public void tearDown() {}
+  public static void tearDown() {}
 }

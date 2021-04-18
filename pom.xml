@@ -23,13 +23,9 @@
 		</dependency>
 		<dependency>
 			<groupId>io.samourai.code.whirlpool</groupId>
-			<artifactId>whirlpool-client-cli</artifactId>
-			<version>0.10.10</version>
+			<artifactId>java-http-client</artifactId>
+			<version>1.0.1</version>
 			<exclusions>
-				<exclusion>
-					<groupId>org.apache.httpcomponents</groupId>
-					<artifactId>httpclient</artifactId>
-				</exclusion>
 				<exclusion>
 					<groupId>io.samourai.code.wallet</groupId>
 					<artifactId>extlibj</artifactId>
@@ -39,7 +35,7 @@
 		<dependency>
 			<groupId>io.samourai.code.wallet</groupId>
 			<artifactId>extlibj</artifactId>
-			<version>0.0.16-fetchWallet</version>
+			<version>0.0.18-fetchWallet</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
