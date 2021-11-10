@@ -12,14 +12,14 @@
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>io.samourai.code.wallet</groupId>
+			<groupId>io.samourai.code.whirlpool</groupId>
 			<artifactId>java-server</artifactId>
-			<version>1.0.2</version>
+			<version>1.0.4-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>io.samourai.code.wallet</groupId>
 			<artifactId>xmanager-protocol</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.4</version>
 		</dependency>
 		<dependency>
 			<groupId>io.samourai.code.wallet</groupId>
@@ -35,7 +35,23 @@
 		<dependency>
 			<groupId>io.samourai.code.wallet</groupId>
 			<artifactId>extlibj</artifactId>
-			<version>0.0.18-fetchWallet</version>
+			<version>0.0.25</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+			<version>${spring-boot.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-core</artifactId>
+			<version>1.6.0</version>
+		</dependency>
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+			<version>1.6.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>

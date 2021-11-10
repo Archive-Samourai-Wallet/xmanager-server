@@ -17,13 +17,18 @@ public class XManagerService {
   private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
   private XManagerServerConfig serverConfig;
   private BackendService backendService;
+  private MetricService metricService;
 
   private Map<String, ManagedService> managedServices;
 
   @Autowired
-  public XManagerService(XManagerServerConfig serverConfig, BackendService backendService) {
+  public XManagerService(
+      XManagerServerConfig serverConfig,
+      BackendService backendService,
+      MetricService metricService) {
     this.serverConfig = serverConfig;
     this.backendService = backendService;
+    this.metricService = metricService;
     this.init();
   }
 
@@ -35,6 +40,7 @@ public class XManagerService {
       ManagedService managedService =
           new ManagedService(serverConfig, backendService, id, serviceConfig.getValue());
       managedServices.put(id, managedService);
+      metricService.manage(managedService);
     }
   }
 

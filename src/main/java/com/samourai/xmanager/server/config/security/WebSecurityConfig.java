@@ -2,10 +2,7 @@ package com.samourai.xmanager.server.config.security;
 
 import com.samourai.javaserver.config.ServerServicesConfig;
 import com.samourai.xmanager.protocol.XManagerEndpoint;
-import com.samourai.xmanager.server.controllers.web.ConfigWebController;
-import com.samourai.xmanager.server.controllers.web.LoginWebController;
-import com.samourai.xmanager.server.controllers.web.StatusWebController;
-import com.samourai.xmanager.server.controllers.web.SystemWebController;
+import com.samourai.xmanager.server.controllers.web.*;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +18,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+  private static final String[] WEB_ACTUATOR_ENDPOINTS = new String[] {"/actuator/prometheus"};
+
+  private static final String[] WEB_ADMIN_ENDPOINTS =
+      new String[] {
+        StatusWebController.ENDPOINT,
+        ConfigWebController.ENDPOINT,
+        SystemWebController.ENDPOINT,
+        MetricsWebController.ENDPOINT_APP,
+        MetricsWebController.ENDPOINT_SYSTEM
+      };
+
   private static final String[] REST_ENDPOINTS =
       new String[] {
         XManagerEndpoint.REST_ADDRESS,
@@ -46,17 +54,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(LoginWebController.PROCESS_ENDPOINT)
         .permitAll()
 
+        // public actuator
+        .antMatchers(WEB_ACTUATOR_ENDPOINTS)
+        .permitAll()
+
         // public REST endpoints
         .antMatchers(REST_ENDPOINTS)
         .permitAll()
 
         // restrict admin
-        .antMatchers(StatusWebController.ENDPOINT)
-        .hasAnyAuthority(WhirlpoolPrivilege.STATUS.toString(), WhirlpoolPrivilege.ALL.toString())
-        .antMatchers(ConfigWebController.ENDPOINT)
-        .hasAnyAuthority(WhirlpoolPrivilege.CONFIG.toString(), WhirlpoolPrivilege.ALL.toString())
-        .antMatchers(SystemWebController.ENDPOINT)
-        .hasAnyAuthority(WhirlpoolPrivilege.SYSTEM.toString(), WhirlpoolPrivilege.ALL.toString())
+        .antMatchers(WEB_ADMIN_ENDPOINTS)
+        .hasAnyAuthority(WhirlpoolPrivilege.ALL.toString())
 
         // reject others
         .anyRequest()

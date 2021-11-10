@@ -1,0 +1,1613 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 19,
+  "iteration": 1636713790103,
+  "links": [],
+  "panels": [
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 80,
+      "panels": [],
+      "repeat": null,
+      "title": "Last success",
+      "type": "row"
+    },
+    {
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null,
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 1800
+              },
+              {
+                "color": "semi-dark-orange",
+                "value": 3600
+              },
+              {
+                "color": "semi-dark-red",
+                "value": 18000
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 6,
+        "x": 0,
+        "y": 1
+      },
+      "id": 92,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.3.1",
+      "repeat": "xmService",
+      "scopedVars": {
+        "xmService": {
+          "selected": false,
+          "text": "BIP47",
+          "value": "BIP47"
+        }
+      },
+      "targets": [
+        {
+          "expr": "time()-xm_last_hit_success_seconds{application=\"$application\",xmService=\"$xmService\"}",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "success",
+          "refId": "A"
+        },
+        {
+          "expr": "time()-xm_last_hit_error_seconds{application=\"$application\",xmService=\"$xmService\"}",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "error",
+          "refId": "B"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "$xmService",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null,
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 1800
+              },
+              {
+                "color": "semi-dark-orange",
+                "value": 3600
+              },
+              {
+                "color": "semi-dark-red",
+                "value": 18000
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 6,
+        "x": 6,
+        "y": 1
+      },
+      "id": 149,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.3.1",
+      "repeatIteration": 1636713790103,
+      "repeatPanelId": 92,
+      "scopedVars": {
+        "xmService": {
+          "selected": false,
+          "text": "OXT_RESEARCH",
+          "value": "OXT_RESEARCH"
+        }
+      },
+      "targets": [
+        {
+          "expr": "time()-xm_last_hit_success_seconds{application=\"$application\",xmService=\"$xmService\"}",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "success",
+          "refId": "A"
+        },
+        {
+          "expr": "time()-xm_last_hit_error_seconds{application=\"$application\",xmService=\"$xmService\"}",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "error",
+          "refId": "B"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "$xmService",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null,
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 1800
+              },
+              {
+                "color": "semi-dark-orange",
+                "value": 3600
+              },
+              {
+                "color": "semi-dark-red",
+                "value": 18000
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 6,
+        "x": 12,
+        "y": 1
+      },
+      "id": 150,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.3.1",
+      "repeatIteration": 1636713790103,
+      "repeatPanelId": 92,
+      "scopedVars": {
+        "xmService": {
+          "selected": false,
+          "text": "RICOCHET",
+          "value": "RICOCHET"
+        }
+      },
+      "targets": [
+        {
+          "expr": "time()-xm_last_hit_success_seconds{application=\"$application\",xmService=\"$xmService\"}",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "success",
+          "refId": "A"
+        },
+        {
+          "expr": "time()-xm_last_hit_error_seconds{application=\"$application\",xmService=\"$xmService\"}",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "error",
+          "refId": "B"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "$xmService",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null,
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 1800
+              },
+              {
+                "color": "semi-dark-orange",
+                "value": 3600
+              },
+              {
+                "color": "semi-dark-red",
+                "value": 18000
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 6,
+        "x": 18,
+        "y": 1
+      },
+      "id": 151,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.3.1",
+      "repeatIteration": 1636713790103,
+      "repeatPanelId": 92,
+      "scopedVars": {
+        "xmService": {
+          "selected": false,
+          "text": "SAAS",
+          "value": "SAAS"
+        }
+      },
+      "targets": [
+        {
+          "expr": "time()-xm_last_hit_success_seconds{application=\"$application\",xmService=\"$xmService\"}",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "success",
+          "refId": "A"
+        },
+        {
+          "expr": "time()-xm_last_hit_error_seconds{application=\"$application\",xmService=\"$xmService\"}",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "error",
+          "refId": "B"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "$xmService",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null,
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 1800
+              },
+              {
+                "color": "semi-dark-orange",
+                "value": 3600
+              },
+              {
+                "color": "semi-dark-red",
+                "value": 18000
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 6,
+        "x": 0,
+        "y": 3
+      },
+      "id": 152,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.3.1",
+      "repeatIteration": 1636713790103,
+      "repeatPanelId": 92,
+      "scopedVars": {
+        "xmService": {
+          "selected": false,
+          "text": "WHIRLPOOL",
+          "value": "WHIRLPOOL"
+        }
+      },
+      "targets": [
+        {
+          "expr": "time()-xm_last_hit_success_seconds{application=\"$application\",xmService=\"$xmService\"}",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "success",
+          "refId": "A"
+        },
+        {
+          "expr": "time()-xm_last_hit_error_seconds{application=\"$application\",xmService=\"$xmService\"}",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "error",
+          "refId": "B"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "$xmService",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null,
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 1800
+              },
+              {
+                "color": "semi-dark-orange",
+                "value": 3600
+              },
+              {
+                "color": "semi-dark-red",
+                "value": 18000
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 6,
+        "x": 6,
+        "y": 3
+      },
+      "id": 153,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.3.1",
+      "repeatIteration": 1636713790103,
+      "repeatPanelId": 92,
+      "scopedVars": {
+        "xmService": {
+          "selected": false,
+          "text": "WHIRLPOOL_SPARROW",
+          "value": "WHIRLPOOL_SPARROW"
+        }
+      },
+      "targets": [
+        {
+          "expr": "time()-xm_last_hit_success_seconds{application=\"$application\",xmService=\"$xmService\"}",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "success",
+          "refId": "A"
+        },
+        {
+          "expr": "time()-xm_last_hit_error_seconds{application=\"$application\",xmService=\"$xmService\"}",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "error",
+          "refId": "B"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "$xmService",
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
+      "id": 101,
+      "panels": [],
+      "repeat": null,
+      "title": "Hits",
+      "type": "row"
+    },
+    {
+      "aliasColors": {
+        "failed": "light-red",
+        "mix error": "light-red",
+        "mix success": "light-green",
+        "success": "light-green"
+      },
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 0,
+        "y": 6
+      },
+      "hiddenSeries": false,
+      "id": 59,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": false,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.1",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "repeat": "xmService",
+      "scopedVars": {
+        "xmService": {
+          "selected": false,
+          "text": "BIP47",
+          "value": "BIP47"
+        }
+      },
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(increase(xm_hit_fail_total{application=\"$application\",xmService=~\"xmService\"}[$__rate_interval]))",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "failed",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(increase(xm_hit_success_total{application=\"$application\",xmService=~\"$xmService\"}[$__rate_interval]))",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "success",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$xmService hits",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "failed": "light-red",
+        "mix error": "light-red",
+        "mix success": "light-green",
+        "success": "light-green"
+      },
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 6,
+        "y": 6
+      },
+      "hiddenSeries": false,
+      "id": 154,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": false,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.1",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "repeatIteration": 1636713790103,
+      "repeatPanelId": 59,
+      "scopedVars": {
+        "xmService": {
+          "selected": false,
+          "text": "OXT_RESEARCH",
+          "value": "OXT_RESEARCH"
+        }
+      },
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(increase(xm_hit_fail_total{application=\"$application\",xmService=~\"xmService\"}[$__rate_interval]))",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "failed",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(increase(xm_hit_success_total{application=\"$application\",xmService=~\"$xmService\"}[$__rate_interval]))",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "success",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$xmService hits",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "failed": "light-red",
+        "mix error": "light-red",
+        "mix success": "light-green",
+        "success": "light-green"
+      },
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 12,
+        "y": 6
+      },
+      "hiddenSeries": false,
+      "id": 155,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": false,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.1",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "repeatIteration": 1636713790103,
+      "repeatPanelId": 59,
+      "scopedVars": {
+        "xmService": {
+          "selected": false,
+          "text": "RICOCHET",
+          "value": "RICOCHET"
+        }
+      },
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(increase(xm_hit_fail_total{application=\"$application\",xmService=~\"xmService\"}[$__rate_interval]))",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "failed",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(increase(xm_hit_success_total{application=\"$application\",xmService=~\"$xmService\"}[$__rate_interval]))",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "success",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$xmService hits",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "failed": "light-red",
+        "mix error": "light-red",
+        "mix success": "light-green",
+        "success": "light-green"
+      },
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 18,
+        "y": 6
+      },
+      "hiddenSeries": false,
+      "id": 156,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": false,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.1",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "repeatIteration": 1636713790103,
+      "repeatPanelId": 59,
+      "scopedVars": {
+        "xmService": {
+          "selected": false,
+          "text": "SAAS",
+          "value": "SAAS"
+        }
+      },
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(increase(xm_hit_fail_total{application=\"$application\",xmService=~\"xmService\"}[$__rate_interval]))",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "failed",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(increase(xm_hit_success_total{application=\"$application\",xmService=~\"$xmService\"}[$__rate_interval]))",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "success",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$xmService hits",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "failed": "light-red",
+        "mix error": "light-red",
+        "mix success": "light-green",
+        "success": "light-green"
+      },
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 0,
+        "y": 11
+      },
+      "hiddenSeries": false,
+      "id": 157,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": false,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.1",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "repeatIteration": 1636713790103,
+      "repeatPanelId": 59,
+      "scopedVars": {
+        "xmService": {
+          "selected": false,
+          "text": "WHIRLPOOL",
+          "value": "WHIRLPOOL"
+        }
+      },
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(increase(xm_hit_fail_total{application=\"$application\",xmService=~\"xmService\"}[$__rate_interval]))",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "failed",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(increase(xm_hit_success_total{application=\"$application\",xmService=~\"$xmService\"}[$__rate_interval]))",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "success",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$xmService hits",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {
+        "failed": "light-red",
+        "mix error": "light-red",
+        "mix success": "light-green",
+        "success": "light-green"
+      },
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 6,
+        "y": 11
+      },
+      "hiddenSeries": false,
+      "id": 158,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": false,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.1",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "repeatIteration": 1636713790103,
+      "repeatPanelId": 59,
+      "scopedVars": {
+        "xmService": {
+          "selected": false,
+          "text": "WHIRLPOOL_SPARROW",
+          "value": "WHIRLPOOL_SPARROW"
+        }
+      },
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(increase(xm_hit_fail_total{application=\"$application\",xmService=~\"xmService\"}[$__rate_interval]))",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "failed",
+          "refId": "B"
+        },
+        {
+          "expr": "sum(increase(xm_hit_success_total{application=\"$application\",xmService=~\"$xmService\"}[$__rate_interval]))",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "success",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$xmService hits",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 16
+      },
+      "id": 148,
+      "panels": [],
+      "title": "All services",
+      "type": "row"
+    },
+    {
+      "aliasColors": {
+        "0.05btc": "light-yellow",
+        "0.5btc": "light-orange",
+        "Total": "light-purple",
+        "all": "super-light-blue",
+        "mix error": "light-red",
+        "mix success": "light-green"
+      },
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 17
+      },
+      "hiddenSeries": false,
+      "id": 132,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.1",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum by (xmService)(increase(xm_hit_success_total{application=\"$application\"}[1d]))",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{xmService}}",
+          "refId": "A"
+        },
+        {
+          "expr": "sum (increase(xm_hit_success_total{application=\"$application\"}[1d]))",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "all",
+          "refId": "B"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Hits /day",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "decimals": null,
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    }
+  ],
+  "schemaVersion": 26,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "x-manager-testnet",
+          "value": "x-manager-testnet"
+        },
+        "datasource": "Prometheus",
+        "definition": "label_values(application)",
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "Application",
+        "multi": false,
+        "name": "application",
+        "options": [],
+        "query": "label_values(application)",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": "Prometheus",
+        "definition": "label_values(xmService)",
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": false,
+        "name": "xmService",
+        "options": [],
+        "query": "label_values(xmService)",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-2d",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "X-Manager Live",
+  "uid": "x-manager",
+  "version": 3
+}

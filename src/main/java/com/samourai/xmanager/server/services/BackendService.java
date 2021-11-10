@@ -5,7 +5,6 @@ import com.samourai.wallet.api.backend.BackendApi;
 import com.samourai.wallet.api.backend.BackendServer;
 import com.samourai.xmanager.protocol.XManagerProtocol;
 import com.samourai.xmanager.server.config.XManagerServerConfig;
-import java8.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,7 +17,7 @@ public class BackendService extends BackendApi {
         serverConfig.isTestnet()
             ? BackendServer.TESTNET.getBackendUrlClear()
             : BackendServer.MAINNET.getBackendUrlClear(),
-        Optional.empty());
+        null);
   }
 
   private static JettyHttpClient computeHttpClient(long requestTimeout) {

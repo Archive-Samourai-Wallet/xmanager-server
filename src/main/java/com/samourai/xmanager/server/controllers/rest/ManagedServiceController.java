@@ -5,6 +5,7 @@ import com.samourai.xmanager.protocol.rest.*;
 import com.samourai.xmanager.server.beans.AddressIndex;
 import com.samourai.xmanager.server.beans.ManagedService;
 import com.samourai.xmanager.server.exceptions.NotifiableException;
+import com.samourai.xmanager.server.services.MetricService;
 import com.samourai.xmanager.server.services.XManagerService;
 import java.lang.invoke.MethodHandles;
 import javax.validation.Valid;
@@ -18,18 +19,26 @@ public class ManagedServiceController extends AbstractRestController {
   private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
   private XManagerService xManagerService;
+  private MetricService metricService;
 
   @Autowired
-  public ManagedServiceController(XManagerService xManagerService) {
+  public ManagedServiceController(XManagerService xManagerService, MetricService metricService) {
     this.xManagerService = xManagerService;
+    this.metricService = metricService;
   }
 
   @RequestMapping(value = XManagerEndpoint.REST_ADDRESS, method = RequestMethod.POST)
   public AddressResponse address(@Valid @RequestBody AddressRequest payload) throws Exception {
     ManagedService managedService = xManagerService.getManagedService(payload.id);
-    AddressIndex nextAddressIndex = managedService.fetchAddressNextOrDefault();
-    AddressResponse response = new AddressResponse(nextAddressIndex.getAddress());
-    return response;
+    try {
+      AddressIndex nextAddressIndex = managedService.fetchAddressNextOrDefault();
+      AddressResponse response = new AddressResponse(nextAddressIndex.getAddress());
+      metricService.onHitSuccess(managedService);
+      return response;
+    } catch (Exception e) {
+      metricService.onHitFail(managedService);
+      throw e;
+    }
   }
 
   @RequestMapping(value = XManagerEndpoint.REST_ADDRESS_INDEX, method = RequestMethod.POST)
@@ -37,11 +46,16 @@ public class ManagedServiceController extends AbstractRestController {
       throws Exception {
     ManagedService managedService = xManagerService.getManagedService(payload.id);
     checkAllowIndex(managedService);
-
-    AddressIndex nextAddressIndex = managedService.fetchAddressNextOrDefault();
-    AddressIndexResponse response =
-        new AddressIndexResponse(nextAddressIndex.getAddress(), nextAddressIndex.getIndex());
-    return response;
+    try {
+      AddressIndex nextAddressIndex = managedService.fetchAddressNextOrDefault();
+      AddressIndexResponse response =
+          new AddressIndexResponse(nextAddressIndex.getAddress(), nextAddressIndex.getIndex());
+      metricService.onHitSuccess(managedService);
+      return response;
+    } catch (Exception e) {
+      metricService.onHitFail(managedService);
+      throw e;
+    }
   }
 
   @RequestMapping(value = XManagerEndpoint.REST_VERIFY_ADDRESS_INDEX, method = RequestMethod.POST)
@@ -49,11 +63,16 @@ public class ManagedServiceController extends AbstractRestController {
       @Valid @RequestBody VerifyAddressIndexRequest payload) throws Exception {
     ManagedService managedService = xManagerService.getManagedService(payload.id);
     checkAllowIndex(managedService);
-
-    String address = managedService.computeAddress(payload.index);
-    boolean valid = address.equals(payload.address);
-    VerifyAddressIndexResponse response = new VerifyAddressIndexResponse(valid);
-    return response;
+    try {
+      String address = managedService.computeAddress(payload.index);
+      boolean valid = address.equals(payload.address);
+      VerifyAddressIndexResponse response = new VerifyAddressIndexResponse(valid);
+      metricService.onHitSuccess(managedService);
+      return response;
+    } catch (Exception e) {
+      metricService.onHitFail(managedService);
+      throw e;
+    }
   }
 
   private void checkAllowIndex(ManagedService managedService) throws Exception {

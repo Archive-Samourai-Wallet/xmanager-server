@@ -37,7 +37,7 @@ public class StatusWebController {
 
   @RequestMapping(value = ENDPOINT, method = RequestMethod.GET)
   public String status(Model model) throws Exception {
-    new XManagerDashboardTemplateModel(serverConfig).apply(model);
+    new XManagerDashboardTemplateModel(serverConfig, "status").apply(model);
     model.addAttribute("protocolVersion", XManagerProtocol.PROTOCOL_VERSION);
     List<ManagedServiceTemplateModel> services =
         xManagerService
