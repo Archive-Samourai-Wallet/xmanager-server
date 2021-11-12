@@ -4,10 +4,8 @@ import com.samourai.javaserver.utils.ServerUtils;
 import com.samourai.xmanager.server.config.XManagerServerConfig;
 import com.samourai.xmanager.server.utils.Utils;
 import java.lang.invoke.MethodHandles;
-import org.junit.Before;
-import org.junit.Rule;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.BeforeAll;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +18,9 @@ public abstract class AbstractIntegrationTest {
 
   @LocalServerPort protected int port;
 
-  @Rule public ExpectedException thrown = ExpectedException.none();
-
   @Autowired protected XManagerServerConfig serverConfig;
 
-  @Before
+  @BeforeAll
   public void setUp() throws Exception {
     // enable debug
     Utils.getInstance().setLoggerDebug();

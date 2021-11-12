@@ -27,9 +27,4 @@ public class ErrorController extends AbstractErrorWebController {
     return super.errorHtml(
         webRequest, response, model, new ErrorTemplateModel(serverConfig.getName()));
   }
-
-  @Override
-  public String getErrorPath() {
-    return ENDPOINT;
-  }
 }
