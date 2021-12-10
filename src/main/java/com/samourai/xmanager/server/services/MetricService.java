@@ -19,6 +19,8 @@ public class MetricService {
   private static final String GAUGE_LAST_HIT_ERROR_SECONDS = "xm_last_hit_error_seconds";
   private static final String GAUGE_LAST_HIT_SUCCESS_SECONDS = "xm_last_hit_success_seconds";
 
+  private static final String GAUGE_LAST_INDEX = "xm_last_index";
+
   public MetricService() {}
 
   public void manage(ManagedService managedService) {
@@ -37,6 +39,13 @@ public class MetricService {
         tags,
         managedService,
         ms -> (ms.getLastSuccess() != null ? ms.getLastSuccess() / 1000 : 0));
+
+    // last index
+    Metrics.gauge(
+        GAUGE_LAST_INDEX,
+        tags,
+        managedService,
+        ms -> (ms.getLastResponse() != null ? ms.getLastResponse().getIndex() : 0));
   }
 
   public void onHitSuccess(ManagedService managedService) {

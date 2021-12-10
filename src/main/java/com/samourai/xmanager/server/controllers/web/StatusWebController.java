@@ -40,9 +40,7 @@ public class StatusWebController {
     new XManagerDashboardTemplateModel(serverConfig, "status").apply(model);
     model.addAttribute("protocolVersion", XManagerProtocol.PROTOCOL_VERSION);
     List<ManagedServiceTemplateModel> services =
-        xManagerService
-            .getManagedServices()
-            .stream()
+        xManagerService.getManagedServices().stream()
             .map(
                 service -> {
                   AddressIndex lastResponse = service.getLastResponse();

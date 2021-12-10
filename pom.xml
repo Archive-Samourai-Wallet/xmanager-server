@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.samourai.code.wallet</groupId>
 	<artifactId>xmanager-server</artifactId>
-	<version>1.0.4</version>
+	<version>1.0.5-SNAPSHOT</version>
 	<name>xmanager-server</name>
 	<properties>
 		<spring-boot.version>2.6.0</spring-boot.version>
@@ -124,7 +124,7 @@
 			<plugin>
 					<groupId>com.coveo</groupId>
 					<artifactId>fmt-maven-plugin</artifactId>
-					<version>2.6.0</version>
+					<version>2.9</version>
 					<executions>
 							<execution>
 									<goals>
