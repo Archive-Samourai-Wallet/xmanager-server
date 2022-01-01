@@ -6,6 +6,7 @@ import com.samourai.wallet.util.XPubUtil;
 import com.samourai.xmanager.server.config.XManagerServerConfig;
 import com.samourai.xmanager.server.exceptions.NotifiableException;
 import com.samourai.xmanager.server.services.BackendService;
+import com.samourai.xmanager.server.services.MetricService;
 import com.samourai.xmanager.server.utils.Utils;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
@@ -19,8 +20,10 @@ public class ManagedService {
   private static final FormatsUtilGeneric formatUtil = FormatsUtilGeneric.getInstance();
   private static final XPubUtil xPubUtil = XPubUtil.getInstance();
 
-  private NetworkParameters params;
+  private XManagerServerConfig serverConfig;
   private BackendService backendService;
+  private MetricService metricService;
+  private Utils utils;
 
   private String id;
   private String xpub;
@@ -37,10 +40,14 @@ public class ManagedService {
   public ManagedService(
       XManagerServerConfig serverConfig,
       BackendService backendService,
+      MetricService metricService,
+      Utils utils,
       String id,
       XManagerServerConfig.ServiceConfig serviceConfig) {
-    this.params = serverConfig.getNetworkParameters();
+    this.serverConfig = serverConfig;
     this.backendService = backendService;
+    this.metricService = metricService;
+    this.utils = utils;
 
     this.id = id;
     this.xpub = serviceConfig.getXpub();
@@ -61,7 +68,7 @@ public class ManagedService {
     }
     for (int i = 0; i < addresses.size(); i++) {
       String address = addresses.get(i);
-      if (!formatUtil.isValidBitcoinAddress(address, params)) {
+      if (!formatUtil.isValidBitcoinAddress(address, serverConfig.getNetworkParameters())) {
         throw new NotifiableException(id + ".address[" + i + "] is invalid: " + address);
       }
 
@@ -81,6 +88,7 @@ public class ManagedService {
   }
 
   public String computeAddress(int i) {
+    NetworkParameters params = serverConfig.getNetworkParameters();
     String address;
     if (bech32) {
       address = xPubUtil.getAddressBech32(xpub, i, Utils.CHAIN_RECEIVE, params);
@@ -100,21 +108,27 @@ public class ManagedService {
       }
       successes++;
       lastSuccess = now;
+      metricService.onHitSuccess(this);
     } catch (Exception e) {
       // fallback
       log.error("[" + id + "] backend not available, fallback to default address", e);
       lastResponse = getAddressDefault();
       errors++;
       lastError = now;
+      metricService.onHitFail(this);
     }
     return lastResponse;
   }
 
   private AddressIndex fetchAddressNext() throws Exception {
-    WalletResponse response = backendService.fetchWallet(xpub);
-    WalletResponse.Address addressResponse = response.addresses[0];
-    String address = computeAddress(addressResponse.account_index);
-    return new AddressIndex(address, addressResponse.account_index);
+    return utils.runOrTimeout(
+        () -> {
+          WalletResponse response = backendService.fetchWallet(xpub);
+          WalletResponse.Address addressResponse = response.addresses[0];
+          String address = computeAddress(addressResponse.account_index);
+          return new AddressIndex(address, addressResponse.account_index);
+        },
+        serverConfig.getRequestTimeout());
   }
 
   private AddressIndex getAddressDefault() {

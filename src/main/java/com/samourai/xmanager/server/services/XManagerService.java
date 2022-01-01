@@ -3,6 +3,7 @@ package com.samourai.xmanager.server.services;
 import com.samourai.xmanager.server.beans.ManagedService;
 import com.samourai.xmanager.server.config.XManagerServerConfig;
 import com.samourai.xmanager.server.exceptions.NotifiableException;
+import com.samourai.xmanager.server.utils.Utils;
 import java.lang.invoke.MethodHandles;
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -38,7 +39,13 @@ public class XManagerService {
         serverConfig.getServices().entrySet()) {
       String id = serviceConfig.getKey();
       ManagedService managedService =
-          new ManagedService(serverConfig, backendService, id, serviceConfig.getValue());
+          new ManagedService(
+              serverConfig,
+              backendService,
+              metricService,
+              Utils.getInstance(),
+              id,
+              serviceConfig.getValue());
       managedServices.put(id, managedService);
       metricService.manage(managedService);
     }
