@@ -2,6 +2,7 @@ package com.samourai.xmanager.server.config.security;
 
 import com.samourai.javaserver.config.ServerServicesConfig;
 import com.samourai.xmanager.protocol.XManagerEndpoint;
+import com.samourai.xmanager.server.controllers.rest.SystemController;
 import com.samourai.xmanager.server.controllers.web.*;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.context.annotation.Bean;
@@ -33,7 +34,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
       new String[] {
         XManagerEndpoint.REST_ADDRESS,
         XManagerEndpoint.REST_ADDRESS_INDEX,
-        XManagerEndpoint.REST_VERIFY_ADDRESS_INDEX
+        XManagerEndpoint.REST_VERIFY_ADDRESS_INDEX,
+        SystemController.ENDPOINT_HEALTH,
       };
 
   @Override
