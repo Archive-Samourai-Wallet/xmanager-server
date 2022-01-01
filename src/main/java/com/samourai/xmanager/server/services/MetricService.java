@@ -3,6 +3,7 @@ package com.samourai.xmanager.server.services;
 import com.samourai.xmanager.server.beans.ManagedService;
 import io.micrometer.core.instrument.Metrics;
 import io.micrometer.core.instrument.Tag;
+import io.micrometer.core.instrument.Timer;
 import java.lang.invoke.MethodHandles;
 import java8.util.Lists;
 import org.slf4j.Logger;
@@ -18,8 +19,9 @@ public class MetricService {
 
   private static final String GAUGE_LAST_HIT_ERROR_SECONDS = "xm_last_hit_error_seconds";
   private static final String GAUGE_LAST_HIT_SUCCESS_SECONDS = "xm_last_hit_success_seconds";
-
   private static final String GAUGE_LAST_INDEX = "xm_last_index";
+
+  private static final String TIMER_HIT_LATENCY = "xm_hit_latency";
 
   public MetricService() {}
 
@@ -54,5 +56,9 @@ public class MetricService {
 
   public void onHitFail(ManagedService managedService) {
     Metrics.counter(COUNTER_HIT_FAIL_TOTAL, "xmService", managedService.getId()).increment();
+  }
+
+  public Timer hitTimer(ManagedService managedService) {
+    return Metrics.timer(TIMER_HIT_LATENCY, "xmService", managedService.getId());
   }
 }

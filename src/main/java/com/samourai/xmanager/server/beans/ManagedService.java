@@ -121,14 +121,20 @@ public class ManagedService {
   }
 
   private AddressIndex fetchAddressNext() throws Exception {
-    return utils.runOrTimeout(
-        () -> {
-          WalletResponse response = backendService.fetchWallet(xpub);
-          WalletResponse.Address addressResponse = response.addresses[0];
-          String address = computeAddress(addressResponse.account_index);
-          return new AddressIndex(address, addressResponse.account_index);
-        },
-        serverConfig.getRequestTimeout());
+    // measure latency
+    return metricService
+        .hitTimer(this)
+        .recordCallable(
+            () ->
+                // use timeout
+                utils.runOrTimeout(
+                    () -> {
+                      WalletResponse response = backendService.fetchWallet(xpub);
+                      WalletResponse.Address addressResponse = response.addresses[0];
+                      String address = computeAddress(addressResponse.account_index);
+                      return new AddressIndex(address, addressResponse.account_index);
+                    },
+                    serverConfig.getRequestTimeout()));
   }
 
   private AddressIndex getAddressDefault() {
