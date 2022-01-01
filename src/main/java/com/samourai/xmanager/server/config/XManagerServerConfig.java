@@ -21,6 +21,7 @@ public class XManagerServerConfig extends ServerConfig {
   private String metricsUrlApp;
   private String metricsUrlSystem;
   private long requestTimeout;
+  private long cacheDuration;
   private NetworkParameters networkParameters;
   private Map<String, ServiceConfig> services;
 
@@ -56,6 +57,14 @@ public class XManagerServerConfig extends ServerConfig {
 
   public void setRequestTimeout(long requestTimeout) {
     this.requestTimeout = requestTimeout;
+  }
+
+  public long getCacheDuration() {
+    return cacheDuration;
+  }
+
+  public void setCacheDuration(long cacheDuration) {
+    this.cacheDuration = cacheDuration;
   }
 
   public NetworkParameters getNetworkParameters() {

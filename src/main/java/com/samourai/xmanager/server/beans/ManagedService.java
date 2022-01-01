@@ -98,7 +98,37 @@ public class ManagedService {
     return address;
   }
 
-  public synchronized AddressIndex fetchAddressNextOrDefault() {
+  private AddressIndex getCachedResponseOrNull() {
+    long now = System.currentTimeMillis();
+    if (lastResponse != null
+        && lastSuccess != null
+        && (now - lastSuccess) < serverConfig.getCacheDuration()) {
+      if (log.isDebugEnabled()) {
+        log.debug("Using cached response: " + id);
+      }
+      return lastResponse;
+    }
+    return null;
+  }
+
+  public AddressIndex getAddressNextOrDefault() {
+    // use cached response ?
+    AddressIndex cachedResponse = getCachedResponseOrNull();
+    if (cachedResponse != null) {
+      return cachedResponse;
+    }
+
+    // fetch new response
+    return fetchAddressNextOrDefault();
+  }
+
+  private synchronized AddressIndex fetchAddressNextOrDefault() {
+    // use cached response ? double check for concurrency
+    AddressIndex cachedResponse = getCachedResponseOrNull();
+    if (cachedResponse != null) {
+      return cachedResponse;
+    }
+
     long now = System.currentTimeMillis();
     // fetch from backend
     try {
@@ -111,8 +141,14 @@ public class ManagedService {
       metricService.onHitSuccess(this);
     } catch (Exception e) {
       // fallback
-      log.error("[" + id + "] backend not available, fallback to default address", e);
-      lastResponse = getAddressDefault();
+      if (lastResponse != null) {
+        // use lastResponse
+        log.error("[" + id + "] backend not available, fallback to lastResponse", e);
+      } else {
+        // use default address
+        log.error("[" + id + "] backend not available, fallback to default address", e);
+        lastResponse = getAddressDefault();
+      }
       errors++;
       lastError = now;
       metricService.onHitFail(this);

@@ -32,7 +32,7 @@ public class ManagedServiceController extends AbstractRestController {
 
     ManagedService managedService = xManagerService.getManagedService(payload.id);
     try {
-      AddressIndex nextAddressIndex = managedService.fetchAddressNextOrDefault();
+      AddressIndex nextAddressIndex = managedService.getAddressNextOrDefault();
       AddressResponse response = new AddressResponse(nextAddressIndex.getAddress());
       return response;
     } catch (Exception e) {
@@ -50,7 +50,7 @@ public class ManagedServiceController extends AbstractRestController {
     ManagedService managedService = xManagerService.getManagedService(payload.id);
     checkAllowIndex(managedService);
     try {
-      AddressIndex nextAddressIndex = managedService.fetchAddressNextOrDefault();
+      AddressIndex nextAddressIndex = managedService.getAddressNextOrDefault();
       AddressIndexResponse response =
           new AddressIndexResponse(nextAddressIndex.getAddress(), nextAddressIndex.getIndex());
       return response;
