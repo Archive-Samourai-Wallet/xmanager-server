@@ -103,9 +103,7 @@ public class ManagedService {
     if (lastResponse != null
         && lastSuccess != null
         && (now - lastSuccess) < serverConfig.getCacheDuration()) {
-      if (log.isDebugEnabled()) {
-        log.debug("Using cached response: " + id);
-      }
+      // use cached response
       return lastResponse;
     }
     return null;
