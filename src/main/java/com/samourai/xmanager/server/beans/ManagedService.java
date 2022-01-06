@@ -10,6 +10,7 @@ import com.samourai.xmanager.server.services.MetricService;
 import com.samourai.xmanager.server.utils.Utils;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import org.bitcoinj.core.NetworkParameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +37,7 @@ public class ManagedService {
   private int errors;
   private Long lastError;
   private AddressIndex lastResponse;
+  private long lastResponseTime;
 
   public ManagedService(
       XManagerServerConfig serverConfig,
@@ -60,6 +62,7 @@ public class ManagedService {
     this.errors = 0;
     this.lastError = null;
     this.lastResponse = null;
+    this.lastResponseTime = 0;
   }
 
   public void validate() throws Exception {
@@ -100,9 +103,7 @@ public class ManagedService {
 
   private AddressIndex getCachedResponseOrNull() {
     long now = System.currentTimeMillis();
-    if (lastResponse != null
-        && lastSuccess != null
-        && (now - lastSuccess) < serverConfig.getCacheDuration()) {
+    if (lastResponse != null && (now - lastResponseTime) < serverConfig.getCacheDuration()) {
       // use cached response
       return lastResponse;
     }
@@ -121,19 +122,27 @@ public class ManagedService {
   }
 
   private synchronized AddressIndex fetchAddressNextOrDefault() {
-    // use cached response ? double check for concurrency
+    // use cached response ? double check for synchronized concurrency
     AddressIndex cachedResponse = getCachedResponseOrNull();
     if (cachedResponse != null) {
       return cachedResponse;
     }
 
-    long now = System.currentTimeMillis();
+    // measure latency
+    return fetchAddressNextOrDefaultNoCache();
+  }
+
+  private synchronized AddressIndex fetchAddressNextOrDefaultNoCache() {
+    long since = System.currentTimeMillis();
     // fetch from backend
     try {
-      lastResponse = fetchAddressNext();
-      if (StringUtils.isEmpty(lastResponse.getAddress())) {
+      AddressIndex addressIndex = fetchAddressNextOrThrow();
+      if (StringUtils.isEmpty(addressIndex.getAddress())) {
         throw new Exception("lastResponse.address is empty!");
       }
+      long now = System.currentTimeMillis();
+      lastResponse = addressIndex;
+      lastResponseTime = now;
       successes++;
       lastSuccess = now;
       metricService.onHitSuccess(this);
@@ -147,28 +156,29 @@ public class ManagedService {
         log.error("[" + id + "] backend not available, fallback to default address", e);
         lastResponse = getAddressDefault();
       }
+      long now = System.currentTimeMillis();
+      lastResponseTime = now; // update cache time
       errors++;
       lastError = now;
       metricService.onHitFail(this);
     }
+    // metrics
+    long elapsed = System.currentTimeMillis() - since;
+    metricService.hitTimer(this).record(elapsed, TimeUnit.MILLISECONDS);
+
     return lastResponse;
   }
 
-  private AddressIndex fetchAddressNext() throws Exception {
-    // measure latency
-    return metricService
-        .hitTimer(this)
-        .recordCallable(
-            () ->
-                // use timeout
-                utils.runOrTimeout(
-                    () -> {
-                      WalletResponse response = backendService.fetchWallet(xpub);
-                      WalletResponse.Address addressResponse = response.addresses[0];
-                      String address = computeAddress(addressResponse.account_index);
-                      return new AddressIndex(address, addressResponse.account_index);
-                    },
-                    serverConfig.getRequestTimeout()));
+  private AddressIndex fetchAddressNextOrThrow() throws Exception {
+    // use timeout
+    return utils.runOrTimeout(
+        () -> {
+          WalletResponse response = backendService.fetchWallet(xpub);
+          WalletResponse.Address addressResponse = response.addresses[0];
+          String address = computeAddress(addressResponse.account_index);
+          return new AddressIndex(address, addressResponse.account_index);
+        },
+        serverConfig.getRequestTimeout());
   }
 
   private AddressIndex getAddressDefault() {

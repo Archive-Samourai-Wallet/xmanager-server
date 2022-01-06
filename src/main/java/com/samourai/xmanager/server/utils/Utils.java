@@ -26,11 +26,11 @@ public class Utils {
     Future<T> future = executor.submit(task);
     executor.schedule(
         () -> {
-          future.cancel(true);
+          future.cancel(true); // throws CancellationException (should be silent)
         },
-        delayMs,
+        delayMs + 100, // silently interrupt job after throwing future's TimeoutException
         TimeUnit.MILLISECONDS);
     executor.shutdown();
-    return future.get(delayMs, TimeUnit.MILLISECONDS);
+    return future.get(delayMs, TimeUnit.MILLISECONDS); // throws TimeoutException
   }
 }
