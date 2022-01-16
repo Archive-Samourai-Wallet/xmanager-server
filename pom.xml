@@ -6,14 +6,14 @@
 	<version>1.0.8-SNAPSHOT</version>
 	<name>xmanager-server</name>
 	<properties>
-		<spring-boot.version>2.6.0</spring-boot.version>
+		<spring-boot.version>2.6.2</spring-boot.version>
 		<project.scm.id>code.samourai.io</project.scm.id>
 	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>io.samourai.code.whirlpool</groupId>
 			<artifactId>java-server</artifactId>
-			<version>1.0.5</version>
+			<version>1.0.6</version>
 		</dependency>
 		<dependency>
 			<groupId>io.samourai.code.wallet</groupId>
@@ -23,7 +23,7 @@
 		<dependency>
 			<groupId>io.samourai.code.wallet</groupId>
 			<artifactId>java-http-client</artifactId>
-			<version>1.0.1</version>
+			<version>1.0.4</version>
 			<exclusions>
 				<exclusion>
 					<groupId>io.samourai.code.wallet</groupId>
@@ -34,7 +34,7 @@
 		<dependency>
 			<groupId>io.samourai.code.wallet</groupId>
 			<artifactId>extlibj</artifactId>
-			<version>0.0.25</version>
+			<version>0.0.28</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -70,24 +70,6 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>1.4.200</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-			<version>4.0.0</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.junit.platform</groupId>
-			<artifactId>junit-platform-launcher</artifactId>
-			<version>1.8.1</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-engine</artifactId>
-			<version>5.8.1</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
