@@ -5,7 +5,7 @@ import io.micrometer.core.instrument.Metrics;
 import io.micrometer.core.instrument.Tag;
 import io.micrometer.core.instrument.Timer;
 import java.lang.invoke.MethodHandles;
-import java8.util.Lists;
+import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,7 @@ public class MetricService {
   public MetricService() {}
 
   public void manage(ManagedService managedService) {
-    Iterable<Tag> tags = Lists.of(Tag.of("xmService", managedService.getId()));
+    Iterable<Tag> tags = Arrays.asList(Tag.of("xmService", managedService.getId()));
 
     // last error
     Metrics.gauge(

@@ -1,9 +1,7 @@
 package com.samourai.xmanager.server.integration;
 
 import com.samourai.xmanager.server.utils.Utils;
-import java.util.concurrent.CancellationException;
 import java.util.concurrent.TimeoutException;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
