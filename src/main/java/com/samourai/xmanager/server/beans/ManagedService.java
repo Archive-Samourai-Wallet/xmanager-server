@@ -1,6 +1,6 @@
 package com.samourai.xmanager.server.beans;
 
-import com.samourai.wallet.api.backend.beans.WalletResponse;
+import com.samourai.wallet.api.backend.beans.XPubResponse;
 import com.samourai.wallet.util.FormatsUtilGeneric;
 import com.samourai.wallet.util.XPubUtil;
 import com.samourai.xmanager.server.config.XManagerServerConfig;
@@ -173,10 +173,10 @@ public class ManagedService {
     // use timeout
     return utils.runOrTimeout(
         () -> {
-          WalletResponse response = backendService.fetchWallet(xpub);
-          WalletResponse.Address addressResponse = response.addresses[0];
-          String address = computeAddress(addressResponse.account_index);
-          return new AddressIndex(address, addressResponse.account_index);
+          XPubResponse response = backendService.fetchXPub(xpub);
+          int acountIndex = response.data.unused.external;
+          String address = computeAddress(acountIndex);
+          return new AddressIndex(address, acountIndex);
         },
         serverConfig.getRequestTimeout());
   }
