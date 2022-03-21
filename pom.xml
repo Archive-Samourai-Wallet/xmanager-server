@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.samourai.code.wallet</groupId>
 	<artifactId>xmanager-server</artifactId>
-	<version>1.0.9</version>
+	<version>1.0.10-SNAPSHOT</version>
 	<name>xmanager-server</name>
 	<properties>
 		<spring-boot.version>2.6.2</spring-boot.version>
@@ -127,6 +127,6 @@
 	</repositories>
 	<scm>
 		<connection>scm:git:https://code.samourai.io/wallet/xpub-manager-for-fees.git</connection>
-		<tag>1.0.9</tag>
+		<tag>1.0.4</tag>
 	</scm>
 </project>
